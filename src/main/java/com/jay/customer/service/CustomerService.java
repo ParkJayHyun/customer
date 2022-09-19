@@ -1,5 +1,6 @@
 package com.jay.customer.service;
 
+import com.jay.customer.common.utils.EncryptorUtils;
 import com.jay.customer.domain.Customer;
 import com.jay.customer.exception.CustomerException;
 import com.jay.customer.repository.CustomerRepository;
@@ -34,10 +35,11 @@ public class CustomerService {
     public void verifyDuplicateUserId(String userId) {
         Optional<Customer> customer = repository.findByUserId(userId);
         if(customer.isPresent()){
-            log.info(" customer.get().getId() = {}" , customer.get().getId());
             throw new CustomerException("이미 사용중인 아이디 입니다.","userId");
         }
     }
+
+
 
 
 }
