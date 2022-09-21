@@ -29,7 +29,9 @@
 <script type="application/javascript">
     $(document).ready(function () {
         var $tbody = $('#tbody');
-        var $customerIdContent = $('#customerIdContent');
+        var $customerIdField = $('#customerIdField');
+        var $globalErrors = $('#globalErrors');
+
 
         $('#search').click(function () {
             $.ajax({
@@ -39,7 +41,7 @@
                     $('#id').siblings('.field-error').remove();
                     var source = $("#table-template").html();
                     var template = Handlebars.compile(source);
-                    var html = template({customer: response});
+                    var html = template({customer: response.customer});
                     $tbody.html('');
                     $tbody.html(html);
                 },
@@ -63,38 +65,51 @@
                 data: JSON.stringify(customer),
                 contentType: "application/json; charset=utf-8",
                 success: function (response) {
-                    //조회할수 있는 아이디 화면 만들기
+
                     $('#saveForm')[0].reset();
+                    initErrorField();
                     var source = $("#id-template").html();
                     var template = Handlebars.compile(source);
-                    var html = template({id: response});
-                    $customerIdContent.html('');
-                    $customerIdContent.html(html);
+                    var html = template({id: response.id});
+                    $customerIdField.html('');
+                    $customerIdField.html(html);
                 },
                 error:function (response) {
+                    initErrorField();
                     errorField(response);
                 }
             });
         });
 
+        //.field-error remove
+        var initErrorField = function () {
+            const initFields = $('#container').find('input');
+            var $intiField;
+            for (var i = 0, length = initFields.length; i < length; i++) {
+                $intiField = $('#' + initFields[i]['name']);
+                if ($intiField && $intiField.length > 0) {
+                    $intiField.siblings('.field-error').remove();
+                }
+            }
+
+            $globalErrors.siblings('.field-error').remove();
+
+        };
+
+        //.field-error add
         var errorField = function (response) {
-            const errorFields = response.responseJSON.errors;
+            const errorFields = response.responseJSON.errors.fields;
             if (!errorFields) {
-                alert(response.response.message);
+                alert(response.responseJSON.errors.message);
                 return;
             }
 
             var $field, error;
             for (var i = 0, length = errorFields.length; i < length; i++) {
                 error = errorFields[i];
-                $field = $('#' + error['field']);
-                /**
-                 * TODO : 처음 error가 났지만  그 이후 error가 없다면 해당 field erorr 삭제 필요
-                 *
-                 */
+                $field = $('#' + error['name']);
                 if ($field && $field.length > 0) {
-                    $field.siblings('.field-error').remove();
-                    $field.after('<div class="field-error">' + error.defaultMessage + '</div>');
+                    $field.after('<div class="field-error">' + error.reason + '</div>');
                 }
             }
         };
@@ -103,7 +118,7 @@
 </script>
 
 <body>
-<div class="container" style="max-width: 600px">
+<div class="container" style="max-width: 600px" id="container">
 
     <div class="py-5 text-center">
         <h2>회원가입 화면</h2>
@@ -116,7 +131,7 @@
             </div>
             <div>
                 <label for="password">비밀번호</label>
-                <input type="password" id="password" name="userId" class="form-control">
+                <input type="password" id="password" name="password" class="form-control">
             </div>
             <div>
                 <label for="email">이메일</label>
@@ -148,7 +163,7 @@
                     <th>회원가입한 회원 ID</th>
                 </tr>
                 </thead>
-                <tbody id="customerIdContent">
+                <tbody id="customerIdField">
 
                 </tbody>
             </table>

@@ -12,10 +12,9 @@ import java.util.stream.Collectors;
 
 @Setter
 @Getter
-public class CustomerRequestDto {
+public class CustomerRequest {
 
     @Length(min = 5,max = 20 ,message = "아이디는 최소5자, 최대 20자내에 입력해 주세요.")
-    @NotBlank(message = "아이디를 입력해 주세요.")
     @Pattern(regexp = "^[a-z0-9]*$" ,message = "영문소문자, 숫자만 입력 가능합니다.")
     private String userId;
 

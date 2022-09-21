@@ -1,15 +1,12 @@
 package com.jay.customer.dto;
 
 
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
-import java.util.Arrays;
-import java.util.stream.Collectors;
-
-@Setter
 @Getter
-public class CustomerResponseDto {
+@Builder
+public class CustomerDto {
 
     private String userId;
 
@@ -17,8 +14,13 @@ public class CustomerResponseDto {
 
     private String phoneNumber;
 
-    public String getPhoneNumber() {
+    private String parsePhoneNumber() {
         int mid = phoneNumber.length() == 10 ? 6 : 7;
         return phoneNumber.substring(0, 3) +"-"+ phoneNumber.substring(3, mid) +"-"+phoneNumber.substring(mid);
     }
+
+    public String getPhoneNumber() {
+        return parsePhoneNumber();
+    }
+
 }
