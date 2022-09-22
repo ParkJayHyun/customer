@@ -28,6 +28,9 @@ public class Customer {
     @Column
     private String phoneNumber;
 
+    @Version
+    private Long version;
+
     @Builder
     public Customer(String userId, String password, String email, String phoneNumber) {
         this.userId = userId;

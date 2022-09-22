@@ -60,22 +60,16 @@ public class CustomerApiController {
     }
 
     private Customer transRequestToCustomer(CustomerRequest request) {
-        Customer customer = Customer.builder()
-                .userId(request.getUserId())
-                .password(request.getPassword())
-                .email(request.getEmail())
-                .phoneNumber(request.usePhoneNumber())
-                .build();
-        return encryptCustomer(customer);
+        return encryptCustomer(request);
     }
 
-    private Customer encryptCustomer(Customer customer) {
+    private Customer encryptCustomer(CustomerRequest request) {
         try {
             return Customer.builder()
-                    .userId(EncryptorUtils.CommonEncrypt(customer.getUserId()))
-                    .password(EncryptorUtils.passwordEncrypt(customer.getPassword()))
-                    .email(EncryptorUtils.CommonEncrypt(customer.getEmail()))
-                    .phoneNumber(EncryptorUtils.CommonEncrypt(customer.getPhoneNumber()))
+                    .userId(EncryptorUtils.CommonEncrypt(request.getUserId()))
+                    .password(EncryptorUtils.passwordEncrypt(request.getPassword()))
+                    .email(EncryptorUtils.CommonEncrypt(request.getEmail()))
+                    .phoneNumber(EncryptorUtils.CommonEncrypt(request.usePhoneNumber()))
                     .build();
         } catch (Exception e) {
             throw new CustomerException(CustomerExceptionType.SIGNUP_INTERNAL_SERVER_ERROR, e, "globalErrors");
@@ -90,7 +84,7 @@ public class CustomerApiController {
                     .email(EncryptorUtils.CommonDecrypt(customer.getEmail()))
                     .build();
         } catch (Exception e) {
-            throw new CustomerException(CustomerExceptionType.FIND_INTERNAL_SERVER_ERROR, e, "globalErrors");
+            throw new CustomerException(CustomerExceptionType.SIGNUP_INTERNAL_SERVER_ERROR, e, "globalErrors");
         }
     }
 
