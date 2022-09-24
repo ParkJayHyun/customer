@@ -104,6 +104,7 @@ REST API를 통해 회원가입 및 회원정보를 조회할 수 있습니다.
     <td>id</td>
     <td>회원id</td>
     <td>Integer</td>
+    <td></td>
   </tr>
   </tr>
 </table>
@@ -147,12 +148,14 @@ REST API를 통해 회원가입 및 회원정보를 조회할 수 있습니다.
     <td></td>
     <td>이메일</td>
     <td>String</td>
+    <td></td>
   </tr>
   <tr>
     <td>phoneNumber</td>
     <td></td>
     <td>휴대폰번호</td>
     <td>String</td>
+    <td></td>
   </tr>
   </tr>
   <tr>
@@ -168,17 +171,20 @@ REST API를 통해 회원가입 및 회원정보를 조회할 수 있습니다.
     <td></td>
     <td>에러 메시지</td>
     <td>String</td>
+    <td></td>
   </tr>
   <tr>
     <td rowspan="2">List&lt;FieldErrors&gt;</td>
     <td>name</td>
     <td>필드 id</td>
     <td>String</td>
+    <td></td>
   </tr>
    <tr>
     <td>reason</td>
     <td>필드 오류 메시지</td>
     <td>String</td>
+    <td></td>
   </tr>
   </tr>
 </table>
