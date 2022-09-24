@@ -36,7 +36,7 @@ public class CustomerApiController {
         Customer customer = transRequestToCustomer(request);
         Integer customerId = service.save(customer);
         Map<String, Object> result = new HashMap<>();
-        result.put("code", HttpStatus.OK.value());
+        result.put("code", HttpStatus.CREATED.value());
         result.put("result", "SUCCESS");
         result.put("id", customerId);
         return new ResponseEntity(result, new HttpHeaders(), HttpStatus.CREATED.value());

@@ -22,7 +22,7 @@ public class PasswordValidator implements ConstraintValidator<Password,String> {
         }
         
         //비밀번호 길이 체크
-        if(password.length() < PASSWORD_LENGTH_MIN && password.length() > PASSWORD_LENGTH_MAX){
+        if(password.length() < PASSWORD_LENGTH_MIN || password.length() > PASSWORD_LENGTH_MAX){
             addConstraintViolation(context, String.format("비밀번호는 최소%d자 ~ 최대 %d자내 입력해 주세요.",PASSWORD_LENGTH_MIN,PASSWORD_LENGTH_MAX));
             return false;
         }
