@@ -1,7 +1,7 @@
 package com.jay.customer.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.jay.customer.error.Errors;
+import com.jay.customer.exception.error.Errors;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

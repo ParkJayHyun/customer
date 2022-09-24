@@ -16,7 +16,7 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column
+    @Column(unique = true)
     private String userId;
 
     @Column
@@ -27,9 +27,6 @@ public class Customer {
 
     @Column
     private String phoneNumber;
-
-    @Version
-    private Long version;
 
     @Builder
     public Customer(String userId, String password, String email, String phoneNumber) {

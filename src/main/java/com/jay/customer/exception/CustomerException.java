@@ -1,4 +1,4 @@
-package com.jay.customer.error.exception;
+package com.jay.customer.exception;
 
 import lombok.Getter;
 

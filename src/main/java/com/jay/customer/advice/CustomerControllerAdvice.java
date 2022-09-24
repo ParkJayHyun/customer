@@ -1,10 +1,12 @@
 package com.jay.customer.advice;
 
 import com.jay.customer.dto.CustomerResponse;
-import com.jay.customer.error.Errors;
-import com.jay.customer.error.exception.CustomerException;
-import com.jay.customer.error.exception.CustomerExceptionType;
+import com.jay.customer.exception.error.Errors;
+import com.jay.customer.exception.CustomerException;
+import com.jay.customer.exception.CustomerExceptionType;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
@@ -28,6 +30,16 @@ public class CustomerControllerAdvice {
         Errors errors = Errors.create(CustomerExceptionType.INVALID_FIELD, exception.getBindingResult());
         CustomerResponse response = CustomerResponse.createFail(CustomerExceptionType.INVALID_FIELD.getStatus(), "FAIL", errors);
         return new ResponseEntity(response, new HttpHeaders(), CustomerExceptionType.INVALID_FIELD.getStatus());
+
+    }
+
+    @ExceptionHandler(DataAccessException.class)
+    public ResponseEntity<CustomerResponse> duplicateUserIdException(DataAccessException exception) {
+        log.error("[DuplicateUserIdException ERROR] Error Message = {}",exception.getMessage(),exception.getCause());
+        DataIntegrityViolationException violationException = (DataIntegrityViolationException) exception;
+        Errors errors = Errors.create(CustomerExceptionType.EXIST_CUSTOMER, "userId");
+        CustomerResponse response = CustomerResponse.createFail(CustomerExceptionType.EXIST_CUSTOMER.getStatus(), "FAIL", errors);
+        return new ResponseEntity(response, new HttpHeaders(), CustomerExceptionType.EXIST_CUSTOMER.getStatus());
 
     }
 }

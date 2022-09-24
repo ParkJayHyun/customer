@@ -1,6 +1,6 @@
-package com.jay.customer.error;
+package com.jay.customer.exception.error;
 
-import com.jay.customer.error.exception.ExceptionType;
+import com.jay.customer.exception.ExceptionType;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

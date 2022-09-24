@@ -5,8 +5,8 @@ import com.jay.customer.domain.Customer;
 import com.jay.customer.dto.CustomerDto;
 import com.jay.customer.dto.CustomerRequest;
 import com.jay.customer.dto.CustomerResponse;
-import com.jay.customer.error.exception.CustomerException;
-import com.jay.customer.error.exception.CustomerExceptionType;
+import com.jay.customer.exception.CustomerException;
+import com.jay.customer.exception.CustomerExceptionType;
 import com.jay.customer.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -39,7 +39,7 @@ public class CustomerApiController {
         result.put("code", HttpStatus.OK.value());
         result.put("result", "SUCCESS");
         result.put("id", customerId);
-        return new ResponseEntity(result, new HttpHeaders(), HttpStatus.OK.value());
+        return new ResponseEntity(result, new HttpHeaders(), HttpStatus.CREATED.value());
     }
 
     /**
