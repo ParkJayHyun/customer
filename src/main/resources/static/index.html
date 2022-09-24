@@ -65,8 +65,7 @@
                 data: JSON.stringify(customer),
                 contentType: "application/json; charset=utf-8",
                 success: function (response) {
-
-                    $('#saveForm')[0].reset();
+                    //$('#saveForm')[0].reset();
                     initErrorField();
                     var source = $("#id-template").html();
                     var template = Handlebars.compile(source);
